@@ -1,4 +1,5 @@
 "use client";
+export const instant = false;
 
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
