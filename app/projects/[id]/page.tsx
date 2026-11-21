@@ -268,7 +268,7 @@ function ProjectContent() {
   );
 }
 
-//the Suspense wrapper 
+//the Suspense wrapper that will help 
 export default function ProjectPage() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">Loading...</div>}>
