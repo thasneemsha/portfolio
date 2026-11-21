@@ -1,6 +1,6 @@
 "use client";
-export const instant = false;
 
+import { Suspense } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,7 +23,7 @@ const nodeStyle = {
   whiteSpace: "pre-wrap" as const,
 };
 
-export default function ProjectPage() {
+function ProjectContent() {
   const router = useRouter();
   const params = useParams();
   const project = projects.find((p) => p.id === params.id);
@@ -32,13 +32,11 @@ export default function ProjectPage() {
   const [activeCodeTab, setActiveCodeTab] = useState(0);
   const details = project?.architectureDetails;
 
-  // Refs for scroll tracking
   const summaryRef = useRef<HTMLElement>(null);
   const envRef = useRef<HTMLElement>(null);
   const decisionsRef = useRef<HTMLElement>(null);
   const codeRef = useRef<HTMLElement>(null);
 
-  // Intersection Observer to highlight active section
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -67,13 +65,13 @@ export default function ProjectPage() {
     );
   }
 
-  // Default Architecture Nodes for Summary
   const summaryNodes: Node[] = [
     { id: "client", position: { x: 50, y: 100 }, data: { label: "React Client (Vercel)" }, style: { ...nodeStyle, borderColor: "#3b82f6" } },
     { id: "backend", position: { x: 300, y: 100 }, data: { label: "FastAPI Backend (Render)" }, style: { ...nodeStyle, borderColor: "#8b5cf6" } },
     { id: "db", position: { x: 300, y: 300 }, data: { label: "Neon PostgreSQL" }, style: { ...nodeStyle, borderColor: "#10b981" } },
     { id: "gemini", position: { x: 550, y: 100 }, data: { label: "Google Gemini API" }, style: { ...nodeStyle, borderColor: "#f59e0b" } },
   ];
+  
   const summaryEdges = [
     { id: "e1", source: "client", target: "backend", animated: true, style: { stroke: "#8b5cf6" } },
     { id: "e2", source: "backend", target: "db", animated: true, style: { stroke: "#10b981" } },
@@ -88,9 +86,15 @@ export default function ProjectPage() {
           <ArrowLeft size={20} /> Back
         </button>
         <h1 className="text-xl font-bold">{project.title}</h1>
-        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-500 rounded-lg font-semibold transition-colors text-sm">
-          Live App <ExternalLink size={16} />
-        </a>
+        {project.liveUrl !== "#" ? (
+          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-500 rounded-lg font-semibold transition-colors text-sm">
+            Live App <ExternalLink size={16} />
+          </a>
+        ) : (
+          <div className="px-4 py-2 border border-white/10 rounded-lg text-gray-500 text-sm">
+            Coming Soon
+          </div>
+        )}
       </header>
 
       {/* MAIN CONTENT */}
@@ -261,5 +265,14 @@ export default function ProjectPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+//the Suspense wrapper 
+export default function ProjectPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">Loading...</div>}>
+      <ProjectContent />
+    </Suspense>
   );
 }
