@@ -267,7 +267,6 @@ function ProjectContent() {
     </main>
   );
 }
-
 //the Suspense wrapper that will help 
 export default function ProjectPage() {
   return (
