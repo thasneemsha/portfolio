@@ -41,7 +41,7 @@ export default function Home() {
               <a href="#projects" className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform duration-200">
                 View My Work
               </a>
-              <a href="/ThasneemMohamed_Resume.pdf" target="_blank" className="px-8 py-4 border border-white/20 rounded-full hover:bg-white/5 hover:border-white/40 transition-all duration-200">
+              <a href="/ThasneemMohamedResume.pdf" target="_blank" className="px-8 py-4 border border-white/20 rounded-full hover:bg-white/5 hover:border-white/40 transition-all duration-200">
                 Download Resume
               </a>
             </div>
@@ -72,7 +72,7 @@ export default function Home() {
 
         {/* FOOTER */}
         <footer className="text-center pb-12 text-gray-600 text-sm relative z-10 border-t border-white/10 pt-8 pointer-events-auto">
-          <p>© 2024 Thasneem Mohamed. Built with Next.js & Tailwind.</p>
+          <p>© 2024 Thasneem Mohamed.</p>
         </footer>
       </div>
     </main>
