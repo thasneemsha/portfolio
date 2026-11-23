@@ -58,25 +58,33 @@ function ProjectContent() {
 
   if (!project || !details) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white flex-col gap-4">
         <h1 className="text-2xl">Project details not found.</h1>
-        <button onClick={() => router.push("/")} className="ml-4 text-violet-400 underline">Go Home</button>
+        <button onClick={() => router.push("/")} className="px-4 py-2 bg-violet-600 rounded-lg text-white hover:bg-violet-500 transition-colors">
+          Go Home
+        </button>
       </div>
     );
   }
 
-  const summaryNodes: Node[] = [
-    { id: "client", position: { x: 50, y: 100 }, data: { label: "React Client (Vercel)" }, style: { ...nodeStyle, borderColor: "#3b82f6" } },
-    { id: "backend", position: { x: 300, y: 100 }, data: { label: "FastAPI Backend (Render)" }, style: { ...nodeStyle, borderColor: "#8b5cf6" } },
-    { id: "db", position: { x: 300, y: 300 }, data: { label: "Neon PostgreSQL" }, style: { ...nodeStyle, borderColor: "#10b981" } },
-    { id: "gemini", position: { x: 550, y: 100 }, data: { label: "Google Gemini API" }, style: { ...nodeStyle, borderColor: "#f59e0b" } },
-  ];
+  // DYNAMIC SUMMARY GRAPH: Uses the environments data from projects.ts
+  // This means it will show FitPulse's architecture, GameMesh's architecture, etc.
+  const primaryEnv = details.environments[0];
+  const summaryNodes: Node[] = primaryEnv.diagramNodes.map(n => ({
+    id: n.id,
+    position: { x: n.x, y: n.y },
+    data: { label: n.label },
+    style: { ...nodeStyle, borderColor: n.color }
+  }));
   
-  const summaryEdges = [
-    { id: "e1", source: "client", target: "backend", animated: true, style: { stroke: "#8b5cf6" } },
-    { id: "e2", source: "backend", target: "db", animated: true, style: { stroke: "#10b981" } },
-    { id: "e3", source: "backend", target: "gemini", animated: true, style: { stroke: "#f59e0b" } },
-  ];
+  const summaryEdges = primaryEnv.diagramEdges.map((e, i) => ({
+    id: `e-${i}`,
+    source: e.source,
+    target: e.target,
+    label: e.label,
+    animated: true,
+    style: { stroke: "#8b5cf6" }
+  }));
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white flex flex-col">
@@ -198,9 +206,9 @@ function ProjectContent() {
 
             {/* ENVIRONMENT VISUALS */}
             {activeSection === "environments" && (
-              <motion.div key="environments" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full h-full flex flex-col">
+              <motion.div key="environments" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full h-full flex flex-col overflow-y-auto">
                 {details.environments.map((env, idx) => (
-                  <div key={idx} className={`flex-1 relative border-b border-white/10 ${idx === 0 ? 'bg-blue-900/5' : 'bg-emerald-900/5'}`}>
+                  <div key={idx} className={`min-h-[400px] relative border-b border-white/10 ${idx % 2 === 0 ? 'bg-blue-900/5' : 'bg-emerald-900/5'}`}>
                     <div className="absolute top-4 left-4 z-10 bg-black/60 px-3 py-1 rounded border border-white/10 text-xs font-mono font-bold">
                       {env.name}
                     </div>
@@ -224,7 +232,7 @@ function ProjectContent() {
 
             {/* DECISIONS VISUAL */}
             {activeSection === "decisions" && (
-              <motion.div key="decisions" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="w-full h-full p-12 flex flex-col justify-center gap-8 bg-black/40">
+              <motion.div key="decisions" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="w-full h-full p-12 flex flex-col justify-center gap-8 bg-black/40 overflow-y-auto">
                 <h3 className="text-2xl font-bold text-center mb-4">Trade-off Analysis</h3>
                 {details.decisions.map((dec, idx) => (
                   <div key={idx} className="bg-[#1a1a1a] border border-white/10 p-6 rounded-xl">
@@ -267,7 +275,8 @@ function ProjectContent() {
     </main>
   );
 }
-//the Suspense wrapper that will help 
+
+// The Suspense wrapper
 export default function ProjectPage() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">Loading...</div>}>
