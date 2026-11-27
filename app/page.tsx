@@ -5,42 +5,49 @@ import ProjectCard from "./components/ProjectCard";
 import HackerGrid from "./components/HackerGrid";
 import { projects } from "./data/projects";
 
-// Data for the new icon-based skills section
+// Importing official brand logos from react-icons (Simple Icons)
+import {
+  SiPython, SiJavascript, SiJava, SiCplusplus, SiMysql, SiHtml5,
+  SiFastapi, SiReact, SiJetpackcompose, SiSqlalchemy, SiPydantic,
+  SiNodedotjs, SiAuth0, SiApachetomcat, SiAmazonaws, SiDocker,
+  SiPostgresql, SiGit, SiGithub, SiRender, SiVercel, SiMicrosoftexcel
+} from "react-icons/si";
+
+// Data mapping the icons and their specific brand colors
 const skillsData = [
-  { name: "Python", icon: "🐍", color: "group-hover:text-blue-400" },
-  { name: "JavaScript", icon: "🟨", color: "group-hover:text-yellow-400" },
-  { name: "Java", icon: "☕", color: "group-hover:text-red-400" },
-  { name: "C++", icon: "⚙️", color: "group-hover:text-blue-500" },
-  { name: "SQL", icon: "🗄️", color: "group-hover:text-cyan-400" },
-  { name: "HTML/CSS", icon: "🎨", color: "group-hover:text-orange-400" },
-  { name: "FastAPI", icon: "⚡", color: "group-hover:text-teal-400" },
-  { name: "React", icon: "⚛️", color: "group-hover:text-blue-400" },
-  { name: "Jetpack Compose", icon: "📱", color: "group-hover:text-green-400" },
-  { name: "SQLAlchemy", icon: "🧬", color: "group-hover:text-red-500" },
-  { name: "Pydantic", icon: "🛡️", color: "group-hover:text-pink-500" },
-  { name: "Node.js", icon: "🟢", color: "group-hover:text-green-500" },
-  { name: "OAuth 2.0", icon: "🔐", color: "group-hover:text-purple-400" },
-  { name: "Apache Tomcat", icon: "🐱", color: "group-hover:text-yellow-600" },
-  { name: "AWS EC2", icon: "☁️", color: "group-hover:text-orange-500" },
-  { name: "Docker", icon: "🐳", color: "group-hover:text-blue-400" },
-  { name: "PostgreSQL", icon: "🐘", color: "group-hover:text-blue-300" },
-  { name: "Git", icon: "🌿", color: "group-hover:text-orange-500" },
-  { name: "GitHub", icon: "🐙", color: "group-hover:text-white" },
-  { name: "Render", icon: "▲", color: "group-hover:text-purple-400" },
-  { name: "Vercel", icon: "▲", color: "group-hover:text-white" },
-  { name: "Microsoft Excel", icon: "📊", color: "group-hover:text-green-600" },
+  { name: "Python", icon: <SiPython />, color: "text-[#3776AB]" },
+  { name: "JavaScript", icon: <SiJavascript />, color: "text-[#F7DF1E]" },
+  { name: "Java", icon: <SiJava />, color: "text-[#007396]" },
+  { name: "C++", icon: <SiCplusplus />, color: "text-[#00599C]" },
+  { name: "SQL", icon: <SiMysql />, color: "text-[#4479A1]" },
+  { name: "HTML/CSS", icon: <SiHtml5 />, color: "text-[#E34F26]" },
+  { name: "FastAPI", icon: <SiFastapi />, color: "text-[#009688]" },
+  { name: "React", icon: <SiReact />, color: "text-[#61DAFB]" },
+  { name: "Jetpack Compose", icon: <SiJetpackcompose />, color: "text-[#4285F4]" },
+  { name: "SQLAlchemy", icon: <SiSqlalchemy />, color: "text-[#D71F00]" },
+  { name: "Pydantic", icon: <SiPydantic />, color: "text-[#E92063]" },
+  { name: "Node.js", icon: <SiNodedotjs />, color: "text-[#339933]" },
+  { name: "OAuth 2.0", icon: <SiAuth0 />, color: "text-[#EB5424]" },
+  { name: "Apache Tomcat", icon: <SiApachetomcat />, color: "text-[#F8DC75]" },
+  { name: "AWS EC2", icon: <SiAmazonaws />, color: "text-[#FF9900]" },
+  { name: "Docker", icon: <SiDocker />, color: "text-[#2496ED]" },
+  { name: "PostgreSQL", icon: <SiPostgresql />, color: "text-[#4169E1]" },
+  { name: "Git", icon: <SiGit />, color: "text-[#F05032]" },
+  { name: "GitHub", icon: <SiGithub />, color: "text-white" },
+  { name: "Render", icon: <SiRender />, color: "text-[#46E3B7]" },
+  { name: "Vercel", icon: <SiVercel />, color: "text-white" },
+  { name: "Microsoft Excel", icon: <SiMicrosoftexcel />, color: "text-[#217346]" },
 ];
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white selection:bg-violet-500/30 overflow-x-hidden relative">
       
-      {/* THE HACKER GRID - Top Right Corner, fully visible and interactive */}
+      {/* THE HACKER GRID - Top Right Corner */}
       <div className="fixed top-0 right-0 z-0 opacity-50 pointer-events-auto">
         <HackerGrid />
       </div>
 
-      {/* MAIN CONTENT WRAPPER - pointer-events-none lets mouse pass through empty spaces */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 pointer-events-none">
         
         {/* HERO SECTION */}
@@ -55,12 +62,10 @@ export default function Home() {
           >
             <p className="text-violet-400 font-mono mb-4 tracking-widest text-sm">HELLO WORLD, I AM</p>
             
-            {/* FIXED: Reduced max font size slightly, added tracking-tight and whitespace-nowrap to keep it on one line */}
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[7rem] font-extrabold tracking-tighter mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 whitespace-nowrap">
               Thasneem Mohamed
             </h1>
             
-            {/* NEW HOOK */}
             <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-10">
               Full-stack developer building fast, secure, and user-focused applications.
             </p>
@@ -79,7 +84,6 @@ export default function Home() {
         {/* ABOUT & SKILLS SECTION */}
         <section className="w-full py-20 pointer-events-auto relative z-10">
           
-          {/* About Me Text */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +109,8 @@ export default function Home() {
                   transition={{ duration: 0.3, delay: index * 0.03 }}
                   className="group flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] border border-white/10 rounded-lg cursor-default hover:bg-[#222] hover:border-white/30 transition-all duration-200 shadow-sm"
                 >
-                  <span className={`text-lg transition-transform duration-200 group-hover:scale-125 ${skill.color}`}>
+                  {/* The Icon wrapper uses the specific brand color */}
+                  <span className={`text-xl transition-transform duration-200 group-hover:scale-125 ${skill.color}`}>
                     {skill.icon}
                   </span>
                   <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
