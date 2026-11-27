@@ -5,36 +5,30 @@ import ProjectCard from "./components/ProjectCard";
 import HackerGrid from "./components/HackerGrid";
 import { projects } from "./data/projects";
 
-// Data for the new colorful skills section
+// Data for the new icon-based skills section
 const skillsData = [
-  {
-    category: "Languages",
-    items: ["Python", "JavaScript", "Java", "C++", "SQL", "HTML/CSS"],
-    color: "from-blue-500/20 to-cyan-500/20",
-    borderColor: "group-hover:border-blue-500/50",
-    textColor: "text-blue-400"
-  },
-  {
-    category: "Frameworks",
-    items: ["FastAPI", "React", "Jetpack", "SQLAlchemy", "Pydantic"],
-    color: "from-violet-500/20 to-fuchsia-500/20",
-    borderColor: "group-hover:border-violet-500/50",
-    textColor: "text-violet-400"
-  },
-  {
-    category: "Tools & Cloud",
-    items: ["AWS EC2", "Docker", "PostgreSQL", "Git", "Render", "Vercel"],
-    color: "from-emerald-500/20 to-teal-500/20",
-    borderColor: "group-hover:border-emerald-500/50",
-    textColor: "text-emerald-400"
-  },
-  {
-    category: "Systems",
-    items: ["Node.js", "OAuth 2.0", "Apache Tomcat", "Microsoft Excel"],
-    color: "from-orange-500/20 to-amber-500/20",
-    borderColor: "group-hover:border-orange-500/50",
-    textColor: "text-orange-400"
-  }
+  { name: "Python", icon: "🐍", color: "group-hover:text-blue-400" },
+  { name: "JavaScript", icon: "🟨", color: "group-hover:text-yellow-400" },
+  { name: "Java", icon: "☕", color: "group-hover:text-red-400" },
+  { name: "C++", icon: "⚙️", color: "group-hover:text-blue-500" },
+  { name: "SQL", icon: "🗄️", color: "group-hover:text-cyan-400" },
+  { name: "HTML/CSS", icon: "🎨", color: "group-hover:text-orange-400" },
+  { name: "FastAPI", icon: "⚡", color: "group-hover:text-teal-400" },
+  { name: "React", icon: "⚛️", color: "group-hover:text-blue-400" },
+  { name: "Jetpack Compose", icon: "📱", color: "group-hover:text-green-400" },
+  { name: "SQLAlchemy", icon: "🧬", color: "group-hover:text-red-500" },
+  { name: "Pydantic", icon: "🛡️", color: "group-hover:text-pink-500" },
+  { name: "Node.js", icon: "🟢", color: "group-hover:text-green-500" },
+  { name: "OAuth 2.0", icon: "🔐", color: "group-hover:text-purple-400" },
+  { name: "Apache Tomcat", icon: "🐱", color: "group-hover:text-yellow-600" },
+  { name: "AWS EC2", icon: "☁️", color: "group-hover:text-orange-500" },
+  { name: "Docker", icon: "🐳", color: "group-hover:text-blue-400" },
+  { name: "PostgreSQL", icon: "🐘", color: "group-hover:text-blue-300" },
+  { name: "Git", icon: "🌿", color: "group-hover:text-orange-500" },
+  { name: "GitHub", icon: "🐙", color: "group-hover:text-white" },
+  { name: "Render", icon: "▲", color: "group-hover:text-purple-400" },
+  { name: "Vercel", icon: "▲", color: "group-hover:text-white" },
+  { name: "Microsoft Excel", icon: "📊", color: "group-hover:text-green-600" },
 ];
 
 export default function Home() {
@@ -47,13 +41,12 @@ export default function Home() {
       </div>
 
       {/* MAIN CONTENT WRAPPER - pointer-events-none lets mouse pass through empty spaces */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pointer-events-none">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pointer-events-none">
         
         {/* HERO SECTION */}
         <section className="relative flex flex-col items-center justify-center min-h-screen text-center pt-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 blur-[150px] rounded-full -z-10" />
           
-          {/* Text container has pointer-events-none so mouse passes through the text itself */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -65,12 +58,11 @@ export default function Home() {
               Thasneem Mohamed
             </h1>
             
-            {/* Updated Hero Tagline to include your full intro */}
-            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
-              I build fast, secure, and user-focused applications. I have deployed a full-stack AI fitness platform, a native Android app, and a multi-API orchestration engine using FastAPI, React, and PostgreSQL. Seeking a software engineering role to bring that same end-to-end ownership to a real team.
+            {/* Short Tagline (as requested) */}
+            <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-10">
+              I build end-to-end software systems. Scroll down to see how.
             </p>
             
-            {/* Buttons container has pointer-events-auto so they are clickable */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pointer-events-auto">
               <a href="#projects" className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform duration-200">
                 View My Work
@@ -82,44 +74,48 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* NEW FUN & COLORFUL SKILLS SECTION */}
-        <section className="w-full py-24 md:py-32 pointer-events-auto relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">Technical Arsenal</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">The languages, frameworks, and tools I use to bring systems to life.</p>
-          </div>
+        {/* ABOUT & SKILLS SECTION */}
+        <section className="w-full py-20 pointer-events-auto relative z-10">
+          
+          {/* About Me Text (Moved here to keep Hero clean) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mb-16 text-lg md:text-xl text-gray-400 leading-relaxed"
+          >
+            <h2 className="text-3xl font-bold text-white mb-6">About Me</h2>
+            <p>
+              I have built and deployed three production-grade applications — a full-stack AI fitness platform, a native Android app, and a multi-API orchestration engine — using FastAPI, React, and PostgreSQL. Seeking a software engineering role to bring that same end-to-end ownership to a real team.
+            </p>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {skillsData.map((skillGroup, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className={`group bg-gradient-to-br ${skillGroup.color} border border-white/5 ${skillGroup.borderColor} p-8 rounded-3xl transition-all duration-300 backdrop-blur-sm`}
-              >
-                <h3 className={`text-xl font-bold mb-6 ${skillGroup.textColor}`}>
-                  {skillGroup.category}
-                </h3>
-                
-                {/* Skill Bubbles */}
-                <div className="flex flex-wrap gap-3">
-                  {skillGroup.items.map((skill, i) => (
-                    <span 
-                      key={i} 
-                      className="px-4 py-2 bg-black/40 border border-white/10 rounded-full text-sm text-gray-300 hover:bg-white/10 hover:scale-110 hover:text-white transition-all duration-200 cursor-default"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+          {/* Skills Icon Grid */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">Skills</h2>
+            <div className="flex flex-wrap gap-3">
+              {skillsData.map((skill, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.03 }}
+                  className="group flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] border border-white/10 rounded-lg cursor-default hover:bg-[#222] hover:border-white/30 transition-all duration-200 shadow-sm"
+                >
+                  <span className={`text-lg transition-transform duration-200 group-hover:scale-125 ${skill.color}`}>
+                    {skill.icon}
+                  </span>
+                  <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
+                    {skill.name}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* PROJECTS SECTION - pointer-events-auto so cards can be clicked */}
+        {/* PROJECTS SECTION */}
         <section id="projects" className="pb-32 pt-10 pointer-events-auto">
           <div className="mb-12">
             <h2 className="text-3xl font-bold mb-2">Featured Systems</h2>
