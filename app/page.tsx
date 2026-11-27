@@ -54,13 +54,15 @@ export default function Home() {
             className="pointer-events-none"
           >
             <p className="text-violet-400 font-mono mb-4 tracking-widest text-sm">HELLO WORLD, I AM</p>
-            <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400">
+            
+            {/* FIXED: Reduced max font size slightly, added tracking-tight and whitespace-nowrap to keep it on one line */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[7rem] font-extrabold tracking-tighter mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 whitespace-nowrap">
               Thasneem Mohamed
             </h1>
             
-            {/* Short Tagline (as requested) */}
+            {/* NEW HOOK */}
             <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-10">
-              I build end-to-end software systems. Scroll down to see how.
+              Full-stack developer building fast, secure, and user-focused applications.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pointer-events-auto">
@@ -77,7 +79,7 @@ export default function Home() {
         {/* ABOUT & SKILLS SECTION */}
         <section className="w-full py-20 pointer-events-auto relative z-10">
           
-          {/* About Me Text (Moved here to keep Hero clean) */}
+          {/* About Me Text */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
